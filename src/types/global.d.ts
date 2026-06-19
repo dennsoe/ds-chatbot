@@ -21,6 +21,8 @@ type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-
-
-
+// Allow side-effect imports of CSS files (globals.css, katex, etc.)
+declare module "*.css" {
+  const content: Record<string, string>;
+  export default content;
+}
