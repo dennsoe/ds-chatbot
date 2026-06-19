@@ -24,9 +24,8 @@ export function SWRConfigProvider({
 
   useEffect(() => {
     console.log(
-      "%c  ╔╦╗╔╗ ╔╗╔╔═╗╔═╗╔═╗╦╔═╗\n  ║║║╠╩╗║║║║ ╦╠═╣║ ╦║╚═╗\n  ╩ ╩╚═╝╝╚╝╚═╝╩ ╩╚═╝╩╚═╝\n\n%c⚡ dennsoeAI\nhttps://github.com/dennsoe/ds-chatbot",
-      "color: #00d4ff; font-weight: bold; font-family: monospace; font-size: 16px; text-shadow: 0 0 10px #00d4ff;",
-      "color: #888; font-size: 12px;",
+      "%c⚡ dennsoeAI — Intelligent AI Chatbot\n  https://github.com/dennsoe/ds-chatbot",
+      "color: #00d4ff; font-weight: bold; font-family: sans-serif; font-size: 14px;",
     );
   }, []);
   return <SWRConfig value={config}>{children}</SWRConfig>;
