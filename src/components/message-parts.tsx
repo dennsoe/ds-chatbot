@@ -189,9 +189,9 @@ export const UserMessagePart = memo(
           )}
         >
           {isLongText && !expanded && (
-            <div className="absolute pointer-events-none bg-gradient-to-t from-accent to-transparent w-full h-40 bottom-0 left-0" />
+            <div className="absolute pointer-events-none bg-linear-to-t from-accent to-transparent w-full h-40 bottom-0 left-0" />
           )}
-          <p className={cn("whitespace-pre-wrap text-sm break-words")}>
+          <p className={cn("whitespace-pre-wrap text-sm wrap-break-word")}>
             {displayText}
           </p>
           {isLongText && (
@@ -487,7 +487,7 @@ export const AssistMessagePart = memo(function AssistMessagePart({
                         <div className="flex gap-3 items-center">
                           <ModelProviderIcon
                             provider={metadata.chatModel.provider}
-                            className="size-5 flex-shrink-0"
+                            className="size-5 shrink-0"
                           />
                           <div className="space-y-0.5 flex-1">
                             <div className="text-sm font-medium text-foreground">
@@ -1003,7 +1003,7 @@ export const ToolMessagePart = memo(
               <div className="w-7 flex justify-center">
                 <Separator
                   orientation="vertical"
-                  className="h-full bg-gradient-to-t from-transparent to-border to-5%"
+                  className="h-full bg-linear-to-t from-transparent to-border to-5%"
                 />
               </div>
               <div className="w-full flex flex-col gap-2">
@@ -1037,7 +1037,7 @@ export const ToolMessagePart = memo(
                     )}
                   </div>
                   {isExpanded && (
-                    <div className="p-2 max-h-[300px] overflow-y-auto ">
+                    <div className="p-2 max-h-75 overflow-y-auto ">
                       <JsonView data={input} />
                     </div>
                   )}
@@ -1077,7 +1077,7 @@ export const ToolMessagePart = memo(
                       )}
                     </div>
                     {isExpanded && (
-                      <div className="p-2 max-h-[300px] overflow-y-auto">
+                      <div className="p-2 max-h-75 overflow-y-auto">
                         <JsonView data={result} />
                       </div>
                     )}
@@ -1238,7 +1238,7 @@ export const FileMessagePart = memo(
         <div className="flex items-start gap-4">
           <div
             className={cn(
-              "flex-shrink-0 rounded-xl p-3",
+              "shrink-0 rounded-xl p-3",
               isUserMessage ? "bg-accent-foreground/10" : "bg-muted",
             )}
           >
@@ -1282,7 +1282,7 @@ export const FileMessagePart = memo(
               {secondaryLabel && (
                 <span
                   className={cn(
-                    "truncate max-w-[10rem]",
+                    "truncate max-w-40",
                     isUserMessage
                       ? "text-accent-foreground/70"
                       : "text-muted-foreground",
@@ -1302,7 +1302,7 @@ export const FileMessagePart = memo(
                   size="icon"
                   variant="ghost"
                   className={cn(
-                    "size-9 flex-shrink-0 hover:text-foreground",
+                    "size-9 shrink-0 hover:text-foreground",
                     isUserMessage
                       ? "text-accent-foreground/70 hover:text-accent-foreground"
                       : "text-muted-foreground",
@@ -1351,7 +1351,7 @@ export function SourceUrlMessagePart({
       <div className="flex items-start gap-4 max-w-sm">
         <div
           className={cn(
-            "flex-shrink-0 rounded-xl p-3",
+            "shrink-0 rounded-xl p-3",
             isUserMessage ? "bg-accent-foreground/10" : "bg-muted",
           )}
         >
@@ -1396,7 +1396,7 @@ export function SourceUrlMessagePart({
               {ext}
             </Badge>
             {mediaType && (
-              <span className="truncate max-w-[10rem]" title={mediaType}>
+              <span className="truncate max-w-40" title={mediaType}>
                 {mediaType}
               </span>
             )}
@@ -1409,7 +1409,7 @@ export function SourceUrlMessagePart({
               size="icon"
               variant="ghost"
               className={cn(
-                "size-9 flex-shrink-0 hover:text-foreground",
+                "size-9 shrink-0 hover:text-foreground",
                 isUserMessage
                   ? "text-accent-foreground/70 hover:text-accent-foreground"
                   : "text-muted-foreground",

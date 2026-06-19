@@ -81,7 +81,7 @@ const components: Partial<Components> = {
   },
   p: ({ children }) => {
     return (
-      <p className="leading-6 my-4 break-words">
+      <p className="leading-6 my-4 wrap-break-word">
         <WordByWordFadeIn>{children}</WordByWordFadeIn>
       </p>
     );
@@ -102,7 +102,7 @@ const components: Partial<Components> = {
   },
   li: ({ node, children, ...props }) => {
     return (
-      <li className="py-2 break-words" {...props}>
+      <li className="py-2 wrap-break-word" {...props}>
         <WordByWordFadeIn>{children}</WordByWordFadeIn>
       </li>
     );
