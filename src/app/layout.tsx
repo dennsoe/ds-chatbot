@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   title: "dennsoeAI",
   description:
     "dennsoeAI is an intelligent AI chatbot powered by multiple LLM providers with MCP tool integration.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default async function RootLayout({

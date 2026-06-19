@@ -69,6 +69,11 @@ export function SidebarHeaderShared({
         <SidebarMenuItem className="flex items-center gap-0.5 mb-1">
           <SidebarMenuButton asChild className="hover:bg-transparent">
             <Link href={href} onClick={handleLinkClick}>
+              <img
+                src="/logo.png"
+                alt="dennsoeAI"
+                className="size-6 shrink-0 rounded"
+              />
               <h4 className="font-bold">{title}</h4>
               {showMobileToggle && (
                 <div
