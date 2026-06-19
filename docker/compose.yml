@@ -1,5 +1,5 @@
 services:
-  better-chatbot:
+  dennsoeai:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile
@@ -10,10 +10,10 @@ services:
     env_file:
       - .env
     dns:
-      - 8.8.8.8 # Google's public DNS server
-      - 8.8.4.4 # Google's public DNS server
+      - 8.8.8.8
+      - 8.8.4.4
     networks:
-      - better-chatbot-networks
+      - dennsoeai-networks
     depends_on:
       - postgres
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
     networks:
-      - better-chatbot-networks
+      - dennsoeai-networks
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -32,5 +32,5 @@ volumes:
   postgres_data:
 
 networks:
-  better-chatbot-networks:
+  dennsoeai-networks:
     driver: bridge
