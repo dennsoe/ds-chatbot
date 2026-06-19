@@ -54,7 +54,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         mermaid.initialize({
           startOnLoad: false,
           theme: theme == "dark" ? "dark" : "default",
-          securityLevel: "loose",
+          securityLevel: "sandbox",
         });
 
         // // First try to parse to catch syntax errors early

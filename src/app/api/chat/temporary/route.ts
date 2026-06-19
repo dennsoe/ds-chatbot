@@ -48,7 +48,11 @@ export async function POST(request: Request) {
     }).toUIMessageStreamResponse();
   } catch (error: any) {
     logger.error(error);
-    return new Response(error.message || "Oops, an error occured!", {
+    const message =
+      process.env.NODE_ENV === "production"
+        ? "An unexpected error occurred"
+        : error.message || "Oops, an error occured!";
+    return new Response(message, {
       status: 500,
     });
   }

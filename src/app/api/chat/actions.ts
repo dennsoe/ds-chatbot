@@ -34,6 +34,9 @@ import { JSONSchema7 } from "json-schema";
 import { ObjectJsonSchema7 } from "app-types/util";
 import { jsonSchemaToZod } from "lib/json-schema-to-zod";
 import { Agent } from "app-types/agent";
+import { pgDb } from "lib/db/pg/db.pg";
+import { ChatMessageTable } from "lib/db/pg/schema.pg";
+import { eq } from "drizzle-orm";
 
 export async function getUserId() {
   const session = await getSession();
@@ -82,10 +85,28 @@ export async function selectThreadWithMessagesAction(threadId: string) {
 }
 
 export async function deleteMessageAction(messageId: string) {
+  const userId = await getUserId();
+
+  // Get the message to find its threadId for ownership check
+  const [message] = await pgDb
+    .select({ threadId: ChatMessageTable.threadId })
+    .from(ChatMessageTable)
+    .where(eq(ChatMessageTable.id, messageId))
+    .limit(1);
+
+  if (!message) throw new Error("Message not found");
+
+  // Verify ownership via thread
+  const thread = await chatRepository.selectThread(message.threadId);
+  if (!thread || thread.userId !== userId) throw new Error("Forbidden");
+
   await chatRepository.deleteChatMessage(messageId);
 }
 
 export async function deleteThreadAction(threadId: string) {
+  const userId = await getUserId();
+  const thread = await chatRepository.selectThread(threadId);
+  if (!thread || thread.userId !== userId) throw new Error("Forbidden");
   await chatRepository.deleteThread(threadId);
 }
 

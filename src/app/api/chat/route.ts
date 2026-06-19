@@ -379,6 +379,10 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     logger.error(error);
-    return Response.json({ message: error.message }, { status: 500 });
+    const message =
+      process.env.NODE_ENV === "production"
+        ? "An unexpected error occurred"
+        : error.message;
+    return Response.json({ message }, { status: 500 });
   }
 }

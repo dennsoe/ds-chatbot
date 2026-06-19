@@ -8,7 +8,7 @@ import {
   ArchiveItemTable,
 } from "../schema.pg";
 
-import { and, desc, eq, gte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, sql } from "drizzle-orm";
 
 export const pgChatRepository: ChatRepository = {
   insertThread: async (
@@ -209,9 +209,18 @@ export const pgChatRepository: ChatRepository = {
       .select({ id: ChatThreadTable.id })
       .from(ChatThreadTable)
       .where(eq(ChatThreadTable.userId, userId));
-    await Promise.all(
-      threadIds.map((threadId) => pgChatRepository.deleteThread(threadId.id)),
-    );
+
+    const ids = threadIds.map((t) => t.id);
+    if (ids.length === 0) return;
+
+    // Bulk delete: 3 queries total instead of 1 + (N × 3)
+    await db
+      .delete(ChatMessageTable)
+      .where(inArray(ChatMessageTable.threadId, ids));
+    await db
+      .delete(ArchiveItemTable)
+      .where(inArray(ArchiveItemTable.itemId, ids));
+    await db.delete(ChatThreadTable).where(inArray(ChatThreadTable.id, ids));
   },
 
   deleteUnarchivedThreads: async (userId: string): Promise<void> => {
@@ -229,11 +238,17 @@ export const pgChatRepository: ChatRepository = {
         ),
       );
 
-    await Promise.all(
-      unarchivedThreadIds.map((threadId) =>
-        pgChatRepository.deleteThread(threadId.id),
-      ),
-    );
+    const ids = unarchivedThreadIds.map((t) => t.id);
+    if (ids.length === 0) return;
+
+    // Bulk delete: 3 queries total instead of 1 + (N × 3)
+    await db
+      .delete(ChatMessageTable)
+      .where(inArray(ChatMessageTable.threadId, ids));
+    await db
+      .delete(ArchiveItemTable)
+      .where(inArray(ArchiveItemTable.itemId, ids));
+    await db.delete(ChatThreadTable).where(inArray(ChatThreadTable.id, ids));
   },
 
   insertMessages: async (
